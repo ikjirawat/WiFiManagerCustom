@@ -184,7 +184,7 @@ void setup()
     gateway.trim();
     ssid.trim();
     pass.trim();
-    
+
     if (initWiFi())
     {
         // Route for root / web page
@@ -273,3 +273,67 @@ void setup()
 void loop()
 {
 }
+
+// //----------------parameter form Web server----------------------
+// void Setting_parameter_on_web_server()
+// {
+//     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+//               { request->send(SPIFFS, "/index.html", "text/html", false); });
+
+//     server.on("/espReset", HTTP_GET, [](AsyncWebServerRequest *request)
+//               {
+//     ESP.restart();
+//     request->send(200, "text/plain", "ESP32 has been reset!"); });
+
+//     server.on("/showpara", HTTP_GET, [](AsyncWebServerRequest *request)
+//               {
+//     String str = "";
+//     int paramsNr = request->params();
+//     str = "";
+//     int wf = 0;
+//     String strIP = "";
+
+//     DynamicJsonDocument  doc(1024);
+//     JsonObject pconvert =  doc.to<JsonObject>();;
+
+//     AsyncWebParameter* p = request->getParam(0);
+//     AsyncWebParameter* p1 = request->getParam(1);
+//     AsyncWebParameter* p2 = request->getParam(2);
+//     AsyncWebParameter* p3 = request->getParam(3);
+//     AsyncWebParameter* p4 = request->getParam(4);
+//     AsyncWebParameter* p5 = request->getParam(5);
+//     AsyncWebParameter* p6 = request->getParam(6);
+//     AsyncWebParameter* p7 = request->getParam(7);
+//     AsyncWebParameter* p8 = request->getParam(8);
+//     AsyncWebParameter* p9 = request->getParam(9);
+//     AsyncWebParameter* p10 = request->getParam(10);
+
+//     pconvert[p->name()] = p->value();
+//     pconvert[p1->name()] = p1->value();
+//     pconvert[p2->name()] = p2->value();
+//     pconvert[p3->name()] = p3->value();
+//     pconvert[p4->name()] = p4->value();
+//     pconvert[p5->name()] = p5->value();
+//     pconvert[p6->name()] = p6->value();
+//     pconvert[p7->name()] = p7->value();
+//     pconvert[p8->name()] = p8->value();
+//     pconvert[p9->name()] = p9->value();
+//     pconvert[p10->name()] = p10->value();
+
+//     char bufSend[1024];
+//     serializeJson(doc, bufSend);
+
+//     Serial.print("From web:");
+//     Serial.println(bufSend);
+
+//     wf = writeToFile("setting.json", bufSend); //////Write to SPIFFS
+//     set_parameter_from_SPIFFS();
+
+//     //-----------------RE-Serial Number-------------------
+//     snprintf(serialNo, sizeof(serialNo), "SN:%s-%04X%08X", mcName, chip, (uint32_t)chipid);
+//     mcSerial = String(serialNo);
+//     //----------------------------------------------------
+
+//     request->send(200, "text/plain", "message received\n\n" + String(str)); });
+// }
+// //--------------------------------------------------------
