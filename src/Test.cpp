@@ -157,20 +157,20 @@ void setup() {
   if(initWiFi()) {
     // Route for root / web page
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-      request->send(SPIFFS, "/index.html", "text/html", false, processor);
+      request->send(SPIFFS, "/wifimanager.html", "text/html", false, processor);
     });
     server.serveStatic("/", SPIFFS, "/");
     
     // Route to set GPIO state to HIGH
     server.on("/on", HTTP_GET, [](AsyncWebServerRequest *request) {
       digitalWrite(ledPin, HIGH);
-      request->send(SPIFFS, "/index.html", "text/html", false, processor);
+      request->send(SPIFFS, "/wifimanager.html", "text/html", false, processor);
     });
 
     // Route to set GPIO state to LOW
     server.on("/off", HTTP_GET, [](AsyncWebServerRequest *request) {
       digitalWrite(ledPin, LOW);
-      request->send(SPIFFS, "/index.html", "text/html", false, processor);
+      request->send(SPIFFS, "/wifimanager.html", "text/html", false, processor);
     });
     server.begin();
   }
@@ -178,7 +178,7 @@ void setup() {
     // Connect to Wi-Fi network with SSID and password
     Serial.println("Setting AP (Access Point)");
     // NULL sets an open Access Point
-    WiFi.softAP("ESP32-WiFiManager[TESTTING]", NULL);
+    WiFi.softAP("ESP32-WiFiManager[CUSTOMIZE]", NULL);
 
     IPAddress IP = WiFi.softAPIP();
     Serial.print("AP IP address: ");

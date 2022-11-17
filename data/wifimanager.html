@@ -63,10 +63,10 @@
   </style>
 </head>
 
-<div class="modal modal-signin position-static d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalSignin">
+<div class="modal modal-signin position-relative d-block py-5" tabindex="-1" role="dialog" id="modalSignin">
   <div class="modal-dialog" role="document">
     <div class="modal-content rounded-4 shadow">
-      <div class="modal-header p-5 pb-4 border-bottom-0">
+      <div class="modal-header p-5 pb-5 border-bottom-0">
         <h2 class="fw-bold mb-0">Device Configuration</h2>
       </div>
 
@@ -75,27 +75,26 @@
           <small class="text-muted">WiFi Section</small>
 
           <div class="form-floating mb-3">
-            <input type="email" class="form-control rounded-3" id="floatingssid" name="ssid"
-              placeholder="name@example.com">
-            <label for="floatingssid">SSID</label>
+            <input type="text" class="form-control rounded-3" id="floatingssid" name="ssid" placeholder="SSID">
+            <label class="opacity-75" for="floatingssid">SSID</label>
           </div>
 
           <div class="form-floating mb-3">
             <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
             <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i>
-            <label for="floatingPassword">Password</label>
+            <label class="opacity-75" for="floatingPassword">Password</label>
             <!-- <input type="checkbox" onclick="myFunction()">Show Password -->
           </div>
 
           <small class="text-muted">Device Credemtials</small>
           <div class="form-floating mb-3">
-            <input type="email" class="form-control rounded-3" id="floatingiccid" name="ssid" placeholder="123456789">
-            <label for="floatingiccid">ICCID</label>
+            <input type="text" class="form-control rounded-3" id="floatingiccid" name="ssid" placeholder="123456789">
+            <label class="opacity-75" for="floatingiccid">ICCID</label>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="password" class="form-control rounded-3" id="floatingimsi" placeholder="123456789">
-            <label for="floatingimsi">IMSI</label>
+            <input type="text" class="form-control rounded-3" id="floatingimsi" placeholder="123456789">
+            <label class="opacity-75" for="floatingimsi">IMSI</label>
           </div>
 
           <input type="checkbox" id="token" onclick="tokenToggle()">
@@ -104,7 +103,7 @@
           <div class="form-floating mb-3">
             <input type="_token" style="display:none" class="form-control rounded-3" id="_tokenfloating"
               placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
-              <label for="_tokenfloating" id="floatingName" style="display:none">Thing Token</label>
+              <label class="opacity-75" for="_tokenfloating" id="floatingName" style="display:none">Thing Token</label>
           </div>
 
           <script>
