@@ -10,21 +10,24 @@ AsyncWebServer server(80);
 // Search for parameter in HTTP POST request
 const char* PARAM_INPUT_1 = "ssid";
 const char* PARAM_INPUT_2 = "pass";
-const char* PARAM_INPUT_3 = "ip";
-const char* PARAM_INPUT_4 = "gateway";
+const char* PARAM_INPUT_3 = "iccid";
+const char* PARAM_INPUT_4 = "imsi";
+const char* PARAM_INPUT_5 = "token";
 
 
 //Variables to save values from HTML form
 String ssid;
 String pass;
-String ip;
-String gateway;
+String iccid;
+String imsi;
+String token;
 
 // File paths to save input values permanently
 const char* ssidPath = "/ssid.txt";
 const char* passPath = "/pass.txt";
-const char* ipPath = "/ip.txt";
-const char* gatewayPath = "/gateway.txt";
+const char* iccidPath = "/iccid.txt";
+const char* imsiPath = "/imsi.txt";
+const char* tokenPath = "/token.txt";
 
 IPAddress localIP;
 //IPAddress localIP(192, 168, 1, 200); // hardcoded
@@ -88,14 +91,14 @@ void writeFile(fs::FS &fs, const char * path, const char * message){
 
 // Initialize WiFi
 bool initWiFi() {
-  if(ssid=="" || ip==""){
+  if(ssid==""){
     Serial.println("Undefined SSID or IP address.");
     return false;
   }
 
   WiFi.mode(WIFI_STA);
-  localIP.fromString(ip.c_str());
-  localGateway.fromString(gateway.c_str());
+  // localIP.fromString(ip.c_str());
+  // localGateway.fromString(gateway.c_str());
 
 
   if (!WiFi.config(localIP, localGateway, subnet)){
@@ -141,18 +144,20 @@ void setup() {
   initSPIFFS();
 
   // Set GPIO 2 as an OUTPUT
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, LOW);
+  // pinMode(ledPin, OUTPUT);
+  // digitalWrite(ledPin, LOW);
   
   // Load values saved in SPIFFS
   ssid = readFile(SPIFFS, ssidPath);
   pass = readFile(SPIFFS, passPath);
-  ip = readFile(SPIFFS, ipPath);
-  gateway = readFile (SPIFFS, gatewayPath);
+  iccid = readFile(SPIFFS, iccidPath);
+  imsi = readFile (SPIFFS, imsiPath);
+  token = readFile(SPIFFS, tokenPath);
   Serial.println(ssid);
   Serial.println(pass);
-  Serial.println(ip);
-  Serial.println(gateway);
+  Serial.println(iccid);
+  Serial.println(imsi);
+  Serial.println(token);
 
   if(initWiFi()) {
     // Route for root / web page
@@ -161,24 +166,24 @@ void setup() {
     });
     server.serveStatic("/", SPIFFS, "/");
     
-    // Route to set GPIO state to HIGH
-    server.on("/on", HTTP_GET, [](AsyncWebServerRequest *request) {
-      digitalWrite(ledPin, HIGH);
-      request->send(SPIFFS, "/wifimanager.html", "text/html", false, processor);
-    });
+    // // Route to set GPIO state to HIGH
+    // server.on("/on", HTTP_GET, [](AsyncWebServerRequest *request) {
+    //   digitalWrite(ledPin, HIGH);
+    //   request->send(SPIFFS, "/wifimanager.html", "text/html", false, processor);
+    // });
+    // // Route to set GPIO state to LOW
+    // server.on("/off", HTTP_GET, [](AsyncWebServerRequest *request) {
+    //   digitalWrite(ledPin, LOW);
+    //   request->send(SPIFFS, "/wifimanager.html", "text/html", false, processor);
+    // });
 
-    // Route to set GPIO state to LOW
-    server.on("/off", HTTP_GET, [](AsyncWebServerRequest *request) {
-      digitalWrite(ledPin, LOW);
-      request->send(SPIFFS, "/wifimanager.html", "text/html", false, processor);
-    });
     server.begin();
   }
   else {
     // Connect to Wi-Fi network with SSID and password
     Serial.println("Setting AP (Access Point)");
     // NULL sets an open Access Point
-    WiFi.softAP("ESP32-WiFiManager[CUSTOMIZE]", NULL);
+    WiFi.softAP("ESP32-WiFiManager[CUSTOM]", NULL);
 
     IPAddress IP = WiFi.softAPIP();
     Serial.print("AP IP address: ");
@@ -214,24 +219,24 @@ void setup() {
           }
           // HTTP POST ip value
           if (p->name() == PARAM_INPUT_3) {
-            ip = p->value().c_str();
-            Serial.print("IP Address set to: ");
-            Serial.println(ip);
+            iccid = p->value().c_str();
+            Serial.print("ICCID: ");
+            Serial.println(iccid);
             // Write file to save value
-            writeFile(SPIFFS, ipPath, ip.c_str());
+            writeFile(SPIFFS, iccidPath, iccid.c_str());
           }
           // HTTP POST gateway value
           if (p->name() == PARAM_INPUT_4) {
-            gateway = p->value().c_str();
-            Serial.print("Gateway set to: ");
-            Serial.println(gateway);
+            imsi = p->value().c_str();
+            Serial.print("IMSI: ");
+            Serial.println(imsi);
             // Write file to save value
-            writeFile(SPIFFS, gatewayPath, gateway.c_str());
+            writeFile(SPIFFS, imsiPath, imsi.c_str());
           }
-          //Serial.printf("POST[%s]: %s\n", p->name().c_str(), p->value().c_str());
+          Serial.printf("POST[%s]: %s\n", p->name().c_str(), p->value().c_str());
         }
       }
-      request->send(200, "text/plain", "Done. ESP will restart, connect to your router and go to IP address: " + ip);
+      request->send(200, "text/plain", "Done. ESP will restart, connect to your router and go to IP address: ");
       delay(3000);
       ESP.restart();
     });

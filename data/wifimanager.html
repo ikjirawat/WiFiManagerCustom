@@ -80,20 +80,20 @@
           </div>
 
           <div class="form-floating mb-3">
-            <input type="password" class="form-control rounded-3" id="floatingPassword" placeholder="Password">
-            <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i>
-            <label class="opacity-75" for="floatingPassword">Password</label>
+            <input type="password" class="form-control rounded-3" id="floatingPassword" name="password" placeholder="Password">
+            <!-- <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i> -->
+            <br><label class="opacity-75" for="floatingPassword">Password</label>
             <!-- <input type="checkbox" onclick="myFunction()">Show Password -->
           </div>
 
           <small class="text-muted">Device Credemtials</small>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control rounded-3" id="floatingiccid" name="ssid" placeholder="123456789">
+            <input type="text" class="form-control rounded-3" id="floatingiccid" name="iccid" placeholder="123456789">
             <label class="opacity-75" for="floatingiccid">ICCID</label>
           </div>
 
           <div class="form-floating mb-3">
-            <input type="text" class="form-control rounded-3" id="floatingimsi" placeholder="123456789">
+            <input type="text" class="form-control rounded-3" id="floatingimsi" name="imsi" placeholder="123456789">
             <label class="opacity-75" for="floatingimsi">IMSI</label>
           </div>
 
@@ -101,8 +101,7 @@
           <small class="text-muted">Set Manual Thing Token</small>
 
           <div class="form-floating mb-3">
-            <input type="_token" style="display:none" class="form-control rounded-3" id="_tokenfloating"
-              placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+            <input type="_token" style="display:none" class="form-control rounded-3" id="_tokenfloating" name="token" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
               <label class="opacity-75" for="_tokenfloating" id="floatingName" style="display:none">Thing Token</label>
           </div>
 
